@@ -136,15 +136,17 @@ class _CustomWidgetExampleState extends State<CustomWidgetExample> {
           curve: Curves.ease,
           duration: Duration(milliseconds: 200),
         ),
-        customWidget: CustomNavBarWidget(
-          items: _navBarsItems(),
-          onItemSelected: (index) {
-            setState(() {
-              _controller.index = index; // THIS IS CRITICAL!! Don't miss it!
-            });
-          },
-          selectedIndex: _controller.index,
-        ),
+        customWidget: (navBarEssentials) {
+          return CustomNavBarWidget(
+            items: _navBarsItems(),
+            onItemSelected: (index) {
+              setState(() {
+                _controller.index = index; // THIS IS CRITICAL!! Don't miss it!
+              });
+            },
+            selectedIndex: _controller.index,
+          );
+        },
       ),
     );
   }

@@ -73,4 +73,22 @@ class PersistentBottomNavBarItem {
       this.onPressed}) {
     assert(opacity >= 0 && opacity <= 1.0);
   }
+
+  PersistentBottomNavBarItem.custom({
+    required this.icon,
+    this.inactiveIcon,
+    this.title,
+    this.contentPadding = 5.0,
+    this.activeColorPrimary = CupertinoColors.activeBlue,
+    this.activeColorSecondary,
+    this.inactiveColorPrimary,
+    this.inactiveColorSecondary = CupertinoColors.systemGrey,
+    this.opacity = 1.0,
+    this.filter,
+    this.textStyle,
+    this.iconSize = 26.0,
+    this.onSelectedTabPressWhenNoScreensPushed,
+    this.routeAndNavigatorSettings = const RouteAndNavigatorSettings(),
+    this.onPressed,
+  });
 }

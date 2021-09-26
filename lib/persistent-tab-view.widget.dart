@@ -137,7 +137,7 @@ class PersistentTabView extends PersistentTabViewBase {
     this.controller,
     this.margin = EdgeInsets.zero,
     this.floatingActionButton,
-    required Widget customWidget,
+    required Widget Function(NavBarEssentials? navBarEssentials)? customWidget,
     required int itemCount,
     this.resizeToAvoidBottomInset = false,
     this.bottomScreenMargin,
@@ -152,6 +152,7 @@ class PersistentTabView extends PersistentTabViewBase {
     this.handleAndroidBackButtonPress = true,
     this.hideNavigationBar,
     this.screenTransitionAnimation = const ScreenTransitionAnimation(),
+    bool popAllScreensOnTapOfSelectedTab = true,
   }) : super(
           key: key,
           context: context,
@@ -173,6 +174,7 @@ class PersistentTabView extends PersistentTabViewBase {
           screenTransitionAnimation: screenTransitionAnimation,
           isCustomWidget: true,
           decoration: NavBarDecoration(),
+          popAllScreensOnTapOfSelectedTab: popAllScreensOnTapOfSelectedTab,
         ) {
     assert(itemCount == screens.length,
         "screens and items length should be same. If you are using the onPressed callback function of 'PersistentBottomNavBarItem', enter a dummy screen like Container() in its place in the screens");
@@ -182,6 +184,15 @@ class PersistentTabView extends PersistentTabViewBase {
                 routeAndNavigatorSettings.navigatorKeys!.length !=
                     items!.length,
         "Number of 'Navigator Keys' must be equal to the number of bottom navigation tabs.");
+    assert(popAllScreensOnTapOfSelectedTab != null,
+    'popAllScreensOnTapOfSelectedTab must not be null');
+    assert(
+    (popAllScreensOnTapOfSelectedTab &&
+        items != null &&
+        items!.isNotEmpty &&
+        items!.length == screens.length) ||
+        !popAllScreensOnTapOfSelectedTab,
+    "items must not be null/empty and should have the same length with the screens");
   }
 }
 
@@ -229,7 +240,7 @@ class PersistentTabViewBase extends StatefulWidget {
   final EdgeInsets? margin;
 
   ///Custom navigation bar widget. To be only used when `navBarStyle` is set to `NavBarStyle.custom`.
-  final Widget? customWidget;
+  final Widget? Function(NavBarEssentials? navBarEssentials)? customWidget;
 
   ///If using `custom` navBarStyle, define this instead of the `items` property
   final int? itemCount;
